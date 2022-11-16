@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Severless From Scratch — TKYT</title>
+  </head>
+  <body>
+    <h1>Severless From Scratch — TKYT</h1>
+    <pre class="output"></pre>
+
+    <form method="POST" class="send-details">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" />
+
+      <label for="status">Status</label>
+      <input id="status" name="status" type="text" />
+
+      <button class="load-data">Load Data</button>
+    </form>
+
+    <script>
+      const form = document.querySelector('.send-details');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const name = formData.get('name');
+        const status = formData.get('status');
+
+        const res = await fetch('/.netlify/functions/hello', {
+          method: 'POST',
+          body: JSON.stringify({ name, status }),
+        });
+
+        if (!res.ok) {
+          console.error(res);
+          return;
+        }
+
+        const data = await res.json();
+        console.log({ data });
+
+        const message = `Hello ${data.name}, you are ${data.status}!`;
+
+        document.querySelector('.output').textContent = message;
+      });
+    </script>
+  </body>
+</html>
