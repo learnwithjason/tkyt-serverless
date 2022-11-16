@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 export const handler = async (req) => {
   const user = JSON.parse(req.body);
 
