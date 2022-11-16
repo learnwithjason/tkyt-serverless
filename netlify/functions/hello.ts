@@ -1,5 +1,10 @@
 import fetch from 'node-fetch';
 
+interface GitHubResponse {
+  avatar_url: string;
+  location: string;
+}
+
 export const handler = async (req) => {
   const user = JSON.parse(req.body);
 
@@ -9,7 +14,7 @@ export const handler = async (req) => {
     console.error(githubRes);
   }
 
-  const profile = await githubRes.json();
+  const profile = (await githubRes.json()) as GitHubResponse;
 
   const avatar = profile.avatar_url;
   const location = profile.location;
