@@ -43,7 +43,7 @@
         const status = formData.get('status');
         const github = formData.get('github');
 
-        const res = await fetch('/.netlify/functions/hello', {
+        const res = await fetch('/api/hello', {
           method: 'POST',
           body: JSON.stringify({ name, status, github }),
         });
